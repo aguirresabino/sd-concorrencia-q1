@@ -13,9 +13,6 @@ public class Instancia implements Serializable {
         this.maxId = maxId;
     }
 
-    public Instancia() {
-    }
-
     public int getId() {
         return id;
     }
