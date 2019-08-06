@@ -30,8 +30,8 @@ public class Loader {
         Runnable inserir = () -> {
             try {
                 Entidade entidade = new Entidade(atomicInteger.getAndIncrement());
-                repository.salvarEntidade(entidade);
                 updatQueue.put(entidade);
+                repository.salvarEntidade(entidade);
                 log.info("[INSERIR] " + entidade);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -42,9 +42,9 @@ public class Loader {
             try {
                 Entidade e = updatQueue.take();
                 e.setEditado(true);
+                deleteQueue.put(e);
                 repository.atualizarEntidade(e.getId());
                 log.info("[EDITAR] " + e);
-                deleteQueue.put(e);
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
             }
