@@ -32,7 +32,7 @@ public class Loader {
                 Entidade entidade = new Entidade(atomicInteger.getAndIncrement());
                 repository.salvarEntidade(entidade);
                 updatQueue.put(entidade);
-                System.out.println("INSERIR " + entidade + "\n");
+                log.info("[INSERIR] " + entidade);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -43,7 +43,7 @@ public class Loader {
                 Entidade e = updatQueue.take();
                 e.setEditado(true);
                 repository.atualizarEntidade(e.getId());
-                System.out.println("EDITAR " + e + "\n");
+                log.info("[EDITAR] " + e);
                 deleteQueue.put(e);
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
@@ -55,7 +55,7 @@ public class Loader {
                 Entidade e = deleteQueue.take();
                 e.setExcluido(true);
                 repository.excluirEntidade(e.getId());
-                System.out.println("DELETAR " + e + "\n");
+                log.info("[DELETAR] " + e);
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
             }
